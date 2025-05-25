@@ -1,11 +1,14 @@
-import 'package:app_notes/config/injection_container.dart';
-import 'package:app_notes/features/notes/presentation/screens/notes_list_screen.dart';
-import 'package:app_notes/features/register/presentation/bloc/barrel_register_bloc.dart';
-import 'package:app_notes/features/register/presentation/screens/register_screen.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:app_notes/features/auth/presentation/bloc/barrel_auth_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:app_notes/features/register/injection/register_injection.dart';
+import 'package:app_notes/features/auth/presentation/bloc/barrel_auth_bloc.dart';
+import 'package:app_notes/features/notes/presentation/bloc/barrel_notes_bloc.dart';
+import 'package:app_notes/features/notes/presentation/screens/notes_list_screen.dart';
+import 'package:app_notes/features/register/presentation/screens/register_screen.dart';
+import 'package:app_notes/features/register/presentation/bloc/barrel_register_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -53,7 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (state is Authenticated) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => NotesListScreen()),
+              MaterialPageRoute(
+                builder:
+                    (context) => BlocProvider(
+                      create: (_) => sl<NotesBloc>(),
+                      child: NotesListScreen(),
+                    ),
+              ),
             );
           }
         },

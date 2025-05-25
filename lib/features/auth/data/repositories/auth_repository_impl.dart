@@ -39,7 +39,12 @@ class AuthRepositoryImpl implements AuthRepository {
         print('[AuthRepository] Token y email guardados en storage');
       }
 
-      return User(email: user.email, password: user.password, token: newToken);
+      return User(
+        id: user.id,
+        email: user.email,
+        password: user.password,
+        token: newToken,
+      );
     } else {
       if (kDebugMode) {
         print(
@@ -71,9 +76,16 @@ class AuthRepositoryImpl implements AuthRepository {
 
       if (user != null) {
         if (kDebugMode) {
-          print('[AuthRepository] Sesión válida para usuario: ${user.email}');
+          print(
+            '[AuthRepository] Sesión válida para usuario: ${user.email} y ${user.id}',
+          );
         }
-        return User(email: user.email, password: user.password, token: token);
+        return User(
+          id: user.id,
+          email: user.email,
+          password: user.password,
+          token: token,
+        );
       } else {
         if (kDebugMode) {
           print(
