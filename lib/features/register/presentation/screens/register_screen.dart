@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app_notes/core/database/database_helper.dart';
 import 'package:app_notes/features/register/presentation/bloc/barrel_register_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -63,26 +62,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: RichText(
-            text: TextSpan(
-              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-              children: [
-                const TextSpan(text: 'Clipen'),
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: Icon(
-                    FontAwesomeIcons.pencil,
-                    color: Colors.amber,
-                    size: 50,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       body: BlocConsumer<RegisterBloc, RegisterState>(
         listener: (context, state) {
           if (state is RegisterSuccess) {
@@ -126,10 +105,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
         builder: (context, state) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const SizedBox(height: 30),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(text: 'Clipen'),
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Icon(
+                              (FontAwesomeIcons.pencil),
+                              color: Colors.amber,
+                              size: 50,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 30),
                   const Text(
                     'Registro de usuario',
@@ -218,21 +219,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                   ),
                   const SizedBox(height: 10),
-
-                  //Prueba de limpieza de la tabla usuarios
-                  ElevatedButton(
-                    onPressed: () async {
-                      await DatabaseHelper.instance.clearUsuarios();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Tabla de usuarios limpiada"),
-                        ),
-                      );
-                    },
-                    child: const Text("Limpiar usuarios"),
-                  ),
-                  //Prueba de limpieza de la tabla usuarios
-                  
                   TextButton(
                     onPressed:
                         () => Navigator.pushReplacementNamed(context, '/login'),
